@@ -1,51 +1,78 @@
-import { Component } from 'react'; 
-import { nanoid } from 'nanoid'
-import Phonebook from './Phonebook/Phonebook';
+import { Component } from 'react';
+import { nanoid } from 'nanoid';
+import Phonebook from '../Phonebook/Phonebook';
 import NamesList from 'components/NamesList/NamesList';
+import Filter from 'components/Filter/Filter';
 
 class Section extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      contacts: [],
-      name: "",
-    }
-  };
+      contacts: props.state.contacts,
+      filter: props.state.filter,
+      name: props.state.name,
+      number: props.state.number,
+    };
+  }
 
-  addCurrentName = (event) => {
+  addCurrentName = event => {
     const name = event.target.name;
     const value = event.target.value;
-    console.log("addCurrentName");
+    console.log('addCurrentName', value);
     this.setState({
       [name]: value,
-    })
+    });
   };
 
-  createContactObject = (evt) => {
+  createContactObject = evt => {
     evt.preventDefault();
-    const value = evt.currentTarget.elements.name.value;
-    console.log(value);
-    console.log("createContactObject");
+    const valueName = evt.currentTarget.elements.name.value;
+    const valueNumber = evt.currentTarget.elements.number.value;
+    console.log(valueName);
+    console.log('createContactObject');
     this.setState(prevState => {
-      return{
-        contacts: [...prevState.contacts, {
-          name: value,
-          id: nanoid(),
-        }],
-      }
-    })
+      return {
+        contacts: [
+          ...prevState.contacts,
+          {
+            name: valueName,
+            number: valueNumber,
+            id: nanoid(),
+          },
+        ],
+      };
+    });
   };
 
-  render(){
-    return(
+  filterContacts = () => {
+    const filteredArray = [];
+    this.state.contacts.filter(element => {
+      if(element.name.includes(this.state.filter)){
+        filteredArray.push(element)
+      }
+      return filteredArray
+    })
+    return filteredArray
+  };
+
+  render() {
+    return (
       <>
         <h2>{this.props.title}</h2>
-        <Phonebook title={"Name"} btnTitle={"Add contact"} state={this.state} inputAction={this.addCurrentName} submitAction={this.createContactObject}/>
+        <Phonebook
+          nameTitle={'Name'}
+          numberTitle={'Number'}
+          btnTitle={'Add contact'}
+          state={this.state}
+          inputAction={this.addCurrentName}
+          submitAction={this.createContactObject}
+        />
         <h2>{this.props.subtitle}</h2>
-        <NamesList namesArr={this.state.contacts}/>
+        <Filter filterTitle={'Finds contacts by name'} state={this.state} inputAction={this.addCurrentName}/>
+        <NamesList namesArr={this.filterContacts()} />
       </>
-    )
+    );
   }
-};
+}
 
 export default Section;
