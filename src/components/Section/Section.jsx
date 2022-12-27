@@ -67,15 +67,15 @@ class Section extends Component {
   };
 
   deleteContact = event => {
-    console.log('delete contact', event);
     if (event.target.nodeName === 'BUTTON') {
       let contactIndex;
       this.state.contacts.map((element, index) => {
         if (event.target.parentNode.textContent.includes(element.name)) {
           contactIndex = index;
+          
         }
+        return contactIndex
       });
-      console.log(contactIndex);
       const array = [...this.state.contacts];
       array.splice(contactIndex, 1);
       this.setState({
