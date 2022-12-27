@@ -1,4 +1,13 @@
-const Phonebook = ({ nameTitle, numberTitle, btnTitle, state, inputAction, submitAction }) => {
+import PropTypes from 'prop-types';
+
+const ContactForm = ({
+  nameTitle,
+  numberTitle,
+  btnTitle,
+  state,
+  inputAction,
+  submitAction,
+}) => {
   return (
     <div>
       <form onSubmit={submitAction}>
@@ -28,4 +37,22 @@ const Phonebook = ({ nameTitle, numberTitle, btnTitle, state, inputAction, submi
   );
 };
 
-export default Phonebook;
+ContactForm.propTypes = {
+  nameTitle: PropTypes.string,
+  numberTitle: PropTypes.string,
+  btnTitle: PropTypes.string,
+  state: PropTypes.shape({
+    contacts: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        number: PropTypes.string,
+      })
+    ),
+    filter: PropTypes.string,
+  }),
+  inputAction: PropTypes.func,
+  submitAction: PropTypes.func,
+};
+
+export default ContactForm;

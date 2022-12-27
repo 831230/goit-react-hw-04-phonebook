@@ -12,8 +12,6 @@ class App extends Component {
         {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
       ],
       filter: '',
-      name: '',
-      number: '',
     };
   }
 
@@ -23,16 +21,6 @@ class App extends Component {
         <Section 
         title={"Phonebook"} 
         subtitle={"Contacts"} 
-        
-        // addContactOnSubmit={(contactObject)=>{
-        //   console.log("App - addContactOnSubmit");
-        //   this.setState(prevState => {
-        //     return{
-        //       contacts: [...prevState.contacts, contactObject],
-        //     }
-        //   },()=>{console.log(this.state);
-        //   })
-        // }}
         state={this.state}
         />
       </>

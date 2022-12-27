@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 
 const Filter = ({filterTitle, state, inputAction}) => {
   return(
@@ -12,6 +13,21 @@ const Filter = ({filterTitle, state, inputAction}) => {
       </form>
     </div>
   )
+};
+
+Filter.propTypes = {
+  filterTitle: PropTypes.string,
+  state: PropTypes.shape({
+    contacts: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        number: PropTypes.string,
+      })
+    ),
+    filter: PropTypes.string,
+  }),
+  inputAction: PropTypes.func,
 };
 
 export default Filter;
