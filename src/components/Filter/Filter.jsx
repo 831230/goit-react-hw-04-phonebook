@@ -1,33 +1,25 @@
 import PropTypes from 'prop-types';
 
-const Filter = ({filterTitle, state, inputAction}) => {
-  return(
+const Filter = ({ filterTitle, inputFilterValue, addCurrentValue }) => {
+  return (
     <div>
       <form>
         <h4>{filterTitle}</h4>
-        <input 
-        type="text"
-        name="filter" 
-        value={state.filter}
-        onChange={inputAction}/>
+        <input
+          type="text"
+          name="filter"
+          value={inputFilterValue}
+          onChange={addCurrentValue}
+        />
       </form>
     </div>
-  )
+  );
 };
 
 Filter.propTypes = {
   filterTitle: PropTypes.string,
-  state: PropTypes.shape({
-    contacts: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string,
-        name: PropTypes.string,
-        number: PropTypes.string,
-      })
-    ),
-    filter: PropTypes.string,
-  }),
-  inputAction: PropTypes.func,
+  inputFilterValue: PropTypes.string,
+  addCurrentValue: PropTypes.func,
 };
 
 export default Filter;

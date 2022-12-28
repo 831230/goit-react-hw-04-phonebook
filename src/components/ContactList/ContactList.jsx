@@ -1,23 +1,24 @@
 import PropTypes from 'prop-types';
 
-const ContactList = ({namesArr, btnTitle, btnAction}) => {
-  return(
+const ContactList = ({ names, btnAction }) => {
+  return (
     <ul>
-      {namesArr && namesArr.map(name => {
-        return(
-          <li key={name.id} onClick={btnAction}>{name.name}	
-          &#58;&#8194;{name.number}
-          <button >{btnTitle}</button>
-          </li>
-        )
-      })}
+      {names &&
+        names.map(name => {
+          return (
+            <li key={name.id} onClick={btnAction}>
+              {name.name}
+              &#58;&#8194;{name.number}
+              <button>Delete</button>
+            </li>
+          );
+        })}
     </ul>
-  )
-}; 
+  );
+};
 
 ContactList.propTypes = {
-  namesArr: PropTypes.array,
-  btnTitle: PropTypes.string,
+  names: PropTypes.array,
   btnAction: PropTypes.func,
 };
 
