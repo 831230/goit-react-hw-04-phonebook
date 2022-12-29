@@ -12,14 +12,7 @@ class App extends Component {
     filter: '',
   };
 
-  addCurrentValue = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  createContactObject = evt => {
+  addContact = evt => {
     evt.preventDefault();
     const valueName = evt.currentTarget.elements.name.value;
     const valueNumber = evt.currentTarget.elements.number.value;
@@ -85,7 +78,7 @@ class App extends Component {
             inputNameValue={this.state.name}
             inputNumberValue={this.state.number}
             addCurrentValue={this.addCurrentValue}
-            addContact={this.createContactObject}
+            addContact={this.addContact}
           />
           <h2>Contacts</h2>
           <Filter

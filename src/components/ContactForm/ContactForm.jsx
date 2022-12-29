@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 const ContactForm = ({
   nameTitle,
   numberTitle,
-  inputNameValue,
-  inputNumberValue,
   addCurrentValue,
   addContact,
 }) => {
@@ -17,7 +15,6 @@ const ContactForm = ({
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          value={inputNameValue}
           required
           onChange={addCurrentValue}
         />
@@ -28,7 +25,6 @@ const ContactForm = ({
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          value={inputNumberValue}
           onChange={addCurrentValue}
         />
         <button type="submit">Add contact</button>
@@ -40,8 +36,6 @@ const ContactForm = ({
 ContactForm.propTypes = {
   nameTitle: PropTypes.string,
   numberTitle: PropTypes.string,
-  inputNameValue: PropTypes.string,
-  inputNumberValue: PropTypes.string,
   addCurrentValue: PropTypes.func,
   addContact: PropTypes.func,
 };
