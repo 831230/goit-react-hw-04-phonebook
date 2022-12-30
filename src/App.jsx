@@ -12,6 +12,14 @@ class App extends Component {
     filter: '',
   };
 
+  resetForm = event => {
+    event.target.name.value = '';
+    event.target.number.value = '';
+    this.setState({
+      filter: '',
+    });
+  };
+
   addContact = evt => {
     evt.preventDefault();
     const valueName = evt.currentTarget.elements.name.value;
@@ -31,12 +39,16 @@ class App extends Component {
           ],
         };
       });
-      this.setState({
-        name: '',
-        number: '',
-        filter: '',
-      });
     }
+    this.resetForm(evt);
+  };
+
+  addCurrentValue = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({
+      [name]: value,
+    });
   };
 
   filterContacts = () => {
@@ -51,20 +63,18 @@ class App extends Component {
   };
 
   deleteContact = event => {
-    if (event.target.nodeName === 'BUTTON') {
-      let contactIndex;
-      this.state.contacts.map((element, index) => {
-        if (event.target.parentNode.textContent.includes(element.name)) {
-          contactIndex = index;
-        }
-        return contactIndex;
-      });
-      const array = [...this.state.contacts];
-      array.splice(contactIndex, 1);
-      this.setState({
-        contacts: array,
-      });
-    }
+    let contactIndex;
+    this.state.contacts.map((element, index) => {
+      if (event.target.parentNode.textContent.includes(element.name)) {
+        contactIndex = index;
+      }
+      return contactIndex;
+    });
+    const array = [...this.state.contacts];
+    array.splice(contactIndex, 1);
+    this.setState({
+      contacts: array,
+    });
   };
 
   render() {
@@ -75,9 +85,6 @@ class App extends Component {
           <ContactForm
             nameTitle={'Name'}
             numberTitle={'Number'}
-            inputNameValue={this.state.name}
-            inputNumberValue={this.state.number}
-            addCurrentValue={this.addCurrentValue}
             addContact={this.addContact}
           />
           <h2>Contacts</h2>

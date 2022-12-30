@@ -6,10 +6,10 @@ const ContactList = ({ names, btnAction }) => {
       {names &&
         names.map(name => {
           return (
-            <li key={name.id} onClick={btnAction}>
+            <li key={name.id} >
               {name.name}
               &#58;&#8194;{name.number}
-              <button>Delete</button>
+              <button onClick={btnAction}>Delete</button>
             </li>
           );
         })}
@@ -18,7 +18,13 @@ const ContactList = ({ names, btnAction }) => {
 };
 
 ContactList.propTypes = {
-  names: PropTypes.array,
+  names: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      number: PropTypes.string,
+    })
+  ),
   btnAction: PropTypes.func,
 };
 
