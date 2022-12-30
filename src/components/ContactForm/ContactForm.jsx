@@ -1,10 +1,6 @@
 import PropTypes from 'prop-types';
 
-const ContactForm = ({
-  nameTitle,
-  numberTitle,
-  addContact,
-}) => {
+const ContactForm = ({ nameTitle, numberTitle, addContact }) => {
   return (
     <div>
       <form onSubmit={addContact}>
