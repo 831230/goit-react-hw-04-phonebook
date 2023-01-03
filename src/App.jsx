@@ -5,6 +5,7 @@ import Section from 'components/Section/Section';
 import ContactForm from 'components/ContactForm/ContactForm';
 import Filter from 'components/Filter/Filter';
 import ContactList from 'components/ContactList/ContactList';
+import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -52,20 +53,18 @@ class App extends Component {
     if (this.state.contacts.some(element => element.name === valueName)) {
       return Notiflix.Notify.warning(`${valueName} is already in contacts`);
     } else {
-      this.setState(
-        prevState => {
-          return {
-            contacts: [
-              ...prevState.contacts,
-              {
-                name: valueName,
-                number: valueNumber,
-                id: nanoid(),
-              },
-            ],
-          };
-        }
-      );
+      this.setState(prevState => {
+        return {
+          contacts: [
+            ...prevState.contacts,
+            {
+              name: valueName,
+              number: valueNumber,
+              id: nanoid(),
+            },
+          ],
+        };
+      });
     }
     this.resetForm(evt);
   };
@@ -123,10 +122,10 @@ class App extends Component {
     } else {
       return true;
     }
-  };
+  }
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevState.contacts.length!==this.state.contacts.length){
+    if (prevState.contacts.length !== this.state.contacts.length) {
       this.setContactsToLocaleStorage();
     }
   }
@@ -135,22 +134,30 @@ class App extends Component {
     return (
       <>
         <h1>Phonebook</h1>
+
         <Section>
-          <ContactForm
-            nameTitle={'Name'}
-            numberTitle={'Number'}
-            addContact={this.addContact}
-          />
+          <ErrorBoundary>
+            <ContactForm
+              nameTitle={'Name'}
+              numberTitle={'Number'}
+              addContact={this.addContact}
+            />
+          </ErrorBoundary>
+
           <h2>Contacts</h2>
-          <Filter
-            filterTitle={'Finds contacts by name'}
-            inputFilterValue={this.state.filter}
-            addCurrentValue={this.addCurrentValue}
-          />
-          <ContactList
-            names={this.filterContacts()}
-            btnAction={this.deleteContact}
-          />
+          <ErrorBoundary>
+            <Filter
+              filterTitle={'Finds contacts by name'}
+              inputFilterValue={this.state.filter}
+              addCurrentValue={this.addCurrentValue}
+            />
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <ContactList
+              names={this.filterContacts()}
+              btnAction={this.deleteContact}
+            />
+          </ErrorBoundary>
         </Section>
       </>
     );
