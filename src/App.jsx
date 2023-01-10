@@ -20,10 +20,6 @@ class App extends Component {
         this.setState({
           contacts: contacts,
         });
-      } else {
-        this.setState({
-          contacts: [],
-        });
       }
     } catch (error) {
       console.log(error);
@@ -96,32 +92,20 @@ class App extends Component {
       }
       return contactIndex;
     });
-    const array = [...this.state.contacts];
-    array.splice(contactIndex, 1);
+    const newContacts = [...this.state.contacts];
+    newContacts.splice(contactIndex, 1);
     this.setState(
       {
-        contacts: array,
+        contacts: newContacts,
       },
       () => {
-        localStorage.removeItem('contacts');
-        localStorage.setItem('contacts', JSON.stringify(array));
+        localStorage.setItem('contacts', JSON.stringify(newContacts));
       }
     );
   };
 
   componentDidMount() {
     this.getContactsWithLocaleStorage();
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (
-      this.state.contacts.length === nextState.contacts.length &&
-      this.state.filter === nextState.filter
-    ) {
-      return false;
-    } else {
-      return true;
-    }
   }
 
   componentDidUpdate(prevProps, prevState) {
