@@ -13,19 +13,6 @@ class App extends Component {
     filter: '',
   };
 
-  getContactsWithLocaleStorage = () => {
-    try {
-      const contacts = JSON.parse(localStorage.getItem('contacts'));
-      if (contacts) {
-        this.setState({
-          contacts: contacts,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   resetForm = event => {
     event.target.name.value = '';
     event.target.number.value = '';
@@ -34,7 +21,7 @@ class App extends Component {
     });
   };
 
-  setContactsToLocaleStorage = () => {
+  saveContactsToStorage = () => {
     try {
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
     } catch (error) {
@@ -105,12 +92,21 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.getContactsWithLocaleStorage();
+    try {
+      const contacts = JSON.parse(localStorage.getItem('contacts'));
+      if (contacts) {
+        this.setState({
+          contacts: contacts,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.contacts.length !== this.state.contacts.length) {
-      this.setContactsToLocaleStorage();
+      this.saveContactsToStorage();
     }
   }
 
